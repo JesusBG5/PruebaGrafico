@@ -1,0 +1,57 @@
+package com.example.pelota;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.view.View;
+import android.widget.Toast;
+public class Grafico extends View {
+
+    Paint pintar=new Paint();
+    int x=0 ,y=0 ;
+    boolean dirX=true ,dirY=true;
+    Color propio;
+
+    public Grafico(Context context){
+        super(context);
+        propio=new Color();
+    }
+
+    @Override
+    public void onDraw(Canvas canvas){
+        pintar.setColor(Color.BLUE);
+        try {
+            canvas.drawCircle(x, y, 40, pintar);
+            if(x<0){ //Izquierda
+                dirX = true;
+            }
+            if(x>canvas.getWidth()){ //Derecha
+                dirX = false;
+            }
+            if(y<0){ //Arriba
+                dirY = true;
+            }
+            if(y>canvas.getHeight()){ //Abajo
+                dirY = false;
+            }
+            if(dirX==true) {
+                x = x + 5; //Derecha
+            }else{
+                x = x - 5; //Izquierda
+            }
+
+            if(dirY==true) {
+                y = y + 5; //Abajo
+            }else{
+                y = y - 5; //Arriba
+            }
+
+            Thread.sleep(5);
+            invalidate();
+        }catch(Exception e){
+            Toast.makeText(null,e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+}
